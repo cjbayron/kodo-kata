@@ -1,2 +1,3 @@
 # hackerrank-ai
-Solutions to HackerRank's Artificial Intelligience problems
+Solutions to HackerRank's Artificial Intelligence challenges
+https://www.hackerrank.com/domains/ai
