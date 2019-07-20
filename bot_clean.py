@@ -6,31 +6,41 @@ def next_move(posr, posc, board):
     if board[posr][posc] == 'd':
         print("CLEAN")
         return
-    
+
     num_r = len(board)
     num_c = len(board[0])
     
-    # check row for dirty cells
-    cur_row_ds = [c for c in range(num_c) if board[posr][c] == 'd']
-    if len(cur_row_ds) > 0:
-        dists = [c - posc for c in cur_row_ds]
-        min_index = dists.index(min(dists))
-        if cur_row_ds[min_index] < posc:
-            print("LEFT")
-        else:
-            print("RIGHT")
-        return
-    
-    # check other rows, then move
-    other_rows_w_ds = [r for r in range(num_r) if ('d' in board[r] and r != posr)]
-    if len(other_rows_w_ds) > 0:
-        dists = [r - posr for r in other_rows_w_ds]
-        min_index = dists.index(min(dists))
-        if other_rows_w_ds[min_index] < posr:
+    # get locations of all dirty cells
+    locs = []
+    dists = []
+    for r in range(num_r):
+        for c in range(num_c):
+            if board[r][c] == 'd':
+                locs.append((r, c))
+                dist = abs(posr-r) + abs(posc-c)
+                dists.append(dist)
+
+    # get min distance to get nearest dirty cell
+    min_index = dists.index(min(dists))
+    nearest_d = locs[min_index]
+
+    # get min dimension
+    y_dist = nearest_d[0] - posr
+    x_dist = nearest_d[1] - posc
+
+    if (x_dist == 0) or ((abs(y_dist) < abs(x_dist)) and (y_dist > 0)):
+        if y_dist < 0:
             print("UP")
         else:
             print("DOWN")
-        return
+
+    else:
+        if x_dist < 0:
+            print("LEFT")
+        else:
+            print("RIGHT")
+
+    return
     
 # Tail starts here
 
